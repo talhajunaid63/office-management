@@ -18,11 +18,17 @@
 #  salary                 :float
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  company_id             :bigint
 #
 # Indexes
 #
+#  index_users_on_company_id            (company_id)
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (company_id => companies.id)
 #
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
@@ -31,4 +37,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_person_name
+
+  acts_as_tenant :company
 end

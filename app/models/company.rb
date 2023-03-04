@@ -13,4 +13,5 @@
 #  index_companies_on_domain_name  (domain_name) UNIQUE
 #
 class Company < ApplicationRecord
+  has_many :users
 end
