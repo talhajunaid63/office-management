@@ -76,5 +76,5 @@ group :test do
   gem "webdrivers"
 end
 
-
 gem 'devise'
+gem 'name_of_person'
