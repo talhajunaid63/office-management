@@ -76,5 +76,6 @@ group :test do
   gem "webdrivers"
 end
 
+gem 'acts_as_tenant'
 gem 'devise'
 gem 'name_of_person'
