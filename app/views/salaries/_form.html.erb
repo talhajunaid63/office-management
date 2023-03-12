@@ -1,0 +1,37 @@
+<%= form_with(model: [@company, salary]) do |form| %>
+  <% if salary.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(salary.errors.count, "error") %> prohibited this salary from being saved:</h2>
+
+      <ul>
+        <% salary.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.select :user_id, options_for_select(@company.users.map { |user| [user.name.full, user.id] }) %>
+  </div>
+
+  <div>
+    <%= form.label :bonus, style: "display: block" %>
+    <%= form.text_field :bonus %>
+  </div>
+
+  <div>
+    <%= form.label :gross_total, style: "display: block" %>
+    <%= form.text_field :gross_total %>
+  </div>
+
+  <div>
+    <%= form.label :month, style: "display: block" %>
+    <%= form.date_field :month %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

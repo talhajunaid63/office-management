@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @salary %>
+
+<div>
+  <%= link_to "Edit this salary", edit_company_salary_path(@company, @salary) %> |
+  <%= link_to "Back to salaries", company_salaries_path(@company) %>
+
+  <%= button_to "Destroy this salary", company_salary_path(@company, @salary), method: :delete %>
+</div>

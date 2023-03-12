@@ -1,0 +1,10 @@
+<h1>Editing salary</h1>
+
+<%= render "form", salary: @salary %>
+
+<br>
+
+<div>
+  <%= link_to "Show this salary", company_salary_path(@company, @salary) %> |
+  <%= link_to "Back to salaries", company_salaries_path(@company) %>
+</div>

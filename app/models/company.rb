@@ -14,6 +14,7 @@
 #
 class Company < ApplicationRecord
   has_many :users
+  has_many :salaries
 
   validates_presence_of :name, :domain_name
   validates_uniqueness_of :domain_name

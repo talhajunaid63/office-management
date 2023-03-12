@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Salaries</h1>
+
+<div id="salaries">
+  <% @salaries.each do |salary| %>
+    <%= render salary %>
+    <p>
+      <%= link_to "Show this salary", company_salary_path(@company) %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New salary", new_company_salary_path(@company) %>

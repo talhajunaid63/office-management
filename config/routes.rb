@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   devise_for :users
   resources :companies do
     resources :users
+    resources :salaries
   end
 end
