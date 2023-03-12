@@ -10,7 +10,9 @@
 #  first_name             :string
 #  job_position           :string
 #  job_type               :string
+#  joining_date           :date
 #  last_name              :string
+#  leaving_date           :date
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string

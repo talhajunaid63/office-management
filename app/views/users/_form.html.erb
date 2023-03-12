@@ -1,4 +1,4 @@
-<%= form_with(model: user) do |form| %>
+<%= form_with(model: [@company, user]) do |form| %>
   <% if user.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -22,12 +22,17 @@
   </div>
 
   <div>
-    <%= form.label :job_position, style: "display: block" %>
-    <%= form.text_field :job_position %>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
   </div>
 
   <div>
-    <%= form.label :salary, style: "display: block" %>
+    <%= form.label :job_position, style: "display: block" %>
+    <%= form.select :job_position, options_for_select(User.job_positions.map { |key, value| [value.titleize, key] }, selected: form.object.job_position) %>
+  </div>
+
+  <div>
+    <%= form.label :basic_salary, style: "display: block" %>
     <%= form.text_field :salary %>
   </div>
 
@@ -38,12 +43,17 @@
 
   <div>
     <%= form.label :job_type, style: "display: block" %>
-    <%= form.text_field :job_type %>
+    <%= form.select :job_type, options_for_select(User.job_types.map { |key, value| [value.titleize, key] }, selected: form.object.job_type) %>
   </div>
 
   <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
+    <%= form.label :joining_date, style: "display: block" %>
+    <%= form.date_field :joining_date %>
+  </div>
+
+  <div>
+    <%= form.label :leaving_date, style: "display: block" %>
+    <%= form.date_field :leaving_date %>
   </div>
 
   <div>
