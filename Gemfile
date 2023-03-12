@@ -79,3 +79,5 @@ gem 'acts_as_tenant'
 gem 'devise'
 gem 'name_of_person'
 gem 'standard'
+
+gem "tailwindcss-rails", "~> 2.0"
