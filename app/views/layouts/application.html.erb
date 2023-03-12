@@ -1,18 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="dark">
   <head>
     <title>OfficeManagement</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="{{ if .IsHome }}summary_large_image{{ else }}summary{{ end }}">
+    <meta name="twitter:site" content="@{{ .Site.Params.twitter }}">
+    <meta name="twitter:creator" content="@{{ .Site.Params.twitter }}">
+    <meta name="twitter:title" content="{{ .Title | markdownify }}">
+    <meta name="twitter:description" content="{{ .Page.Params.description | default .Site.Params.description | markdownify }}">
+    <meta name="twitter:image" content="{{ if .IsHome }}{{ .Site.Params.social_logo_path | absURL }}{{ else }}{{ .Site.Params.social_image_path | absURL }}{{ end }}">
+
+    <!-- Facebook -->
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta property="og:title" content="{{ .Title | markdownify }}">
+    <meta property="og:description" content="{{ .Page.Params.description | default .Site.Params.description | markdownify }}">
+    <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+    <meta property="og:image" content="{{ .Site.Params.social_image_path | absURL }}">
+    <meta property="og:image:type" content="image/png">
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+  <body class="bg-white dark:bg-gray-900">
+    <%= render "shared/navbar" %>
+
+    <div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
+
+      <%= render "shared/sidebar" %>
+      
+      <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
+        <main>
+          <%= yield %>
+        </main>
+        <%= render "shared/footer" %>
+      </div>
+
+    </div>
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/datepicker.min.js"></script>
+    <script>
+      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+      if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+      } else {
+          document.documentElement.classList.remove('dark')
+      }
+    </script>
   </body>
 </html>
