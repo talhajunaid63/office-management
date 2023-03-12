@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   resources :companies do
     resources :users
     resources :salaries
+    resources :expenses
   end
 end
