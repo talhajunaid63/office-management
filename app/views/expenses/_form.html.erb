@@ -1,37 +1,48 @@
 <%= form_with(model: [@company, expense]) do |form| %>
   <% if expense.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(expense.errors.count, "error") %> prohibited this expense from being saved:</h2>
-
-      <ul>
-        <% expense.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+      <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+      <span class="sr-only">Danger</span>
+      <div>
+        <span class="font-medium"><%= pluralize(expense.errors.count, "error") %> prohibited this expense from being saved:</span>
+          <ul class="mt-1.5 ml-4 list-disc list-inside">
+            <% expense.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :expense_type, style: "display: block" %>
-    <%= form.select :expense_type, options_for_select(Expense.expense_types.map{ |key, value| [value.titleize, key] }, selected: form.object.expense_type)  %>
-  </div>
+  <div class="grid grid-cols-6 gap-6">
+    <div class="col-span-6 sm:col-span-3">
+      <%= form.label :expense_type, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+      <%= form.select :expense_type, options_for_select(Expense.expense_types.map{ |key, value| [value.titleize, key] }, selected: form.object.expense_type), {}, { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" }  %>
+    </div>
+    <div class="col-span-6 sm:col-span-3">
+      <%= form.label :amount, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+      <%= form.text_field :amount, disabled: local_assigns[:disabled], class: "shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder:"10000" %>
+    </div>
+    <div class="col-span-6 sm:col-span-3">
+      <%= form.label :date, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+      <%= form.date_field :date, disabled: local_assigns[:disabled], class: "shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" %>
+    </div>
+    <div class="col-span-6 sm:col-span-3">
+      <%= form.label :comments, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+      <%= form.text_area :comments, disabled: local_assigns[:disabled], class: "shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder:"Write comments.." %>
+    </div>
+    <% if local_assigns[:disabled].present? %>
+    <div class="col-span-6 sm:col-full justify-self-end">
+    
+      <%= link_to "Edit this Expenses", edit_company_expense_path(@company, expense), class: "text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" %>
+      <%= link_to "Back to Expenses", company_expenses_path(@company), class: "text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" %>
+    </div>
 
-  <div>
-    <%= form.label :amount, style: "display: block" %>
-    <%= form.number_field :amount %>
-  </div>
-
-  <div>
-    <%= form.label :date, style: "display: block" %>
-    <%= form.date_field :date %>
-  </div>
-
-  <div>
-    <%= form.label :comments, style: "display: block" %>
-    <%= form.text_area :comments %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <% else %>
+      <div class="col-span-6 sm:col-full justify-self-end">
+        <%= form.submit class: "text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" %>
+        <%= link_to "Cancel", company_expenses_path(@company), class: "border border-gray-200 dark:border-gray-500 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-600" %>
+      </div>
+    <% end %>
   </div>
 <% end %>
