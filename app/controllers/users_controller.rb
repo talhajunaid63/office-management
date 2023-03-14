@@ -26,11 +26,13 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to company_user_url(@company, @user), notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
+        format.html { redirect_to company_users_url(@company), notice: 'User was successfully created.' }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.update('remote_modal_body',
+                                                   partial: 'users/form',
+                                                   locals: { user: @user })
+        end
       end
     end
   end
@@ -39,11 +41,13 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to company_user_url(@company, @user), notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+        format.html { redirect_to company_users_url(@company), notice: 'User was successfully updated.' }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.update('remote_modal_body',
+                                                   partial: 'users/form',
+                                                   locals: { user: @user })
+        end
       end
     end
   end

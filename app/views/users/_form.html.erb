@@ -30,7 +30,7 @@
     </div>
     <div class="col-span-6 sm:col-span-3">
       <%= form.label :job_position, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-      <%= form.select :job_position, options_for_select(User.job_positions.map { |key, value| [value.titleize, key] }, selected: form.object.job_position), {}, { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" } %>
+      <%= form.select :job_position, options_for_select(User.job_positions.map { |key, value| [value.titleize, key] }, selected: form.object.job_position), {}, { disabled: local_assigns[:disabled], class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" } %>
     </div>
 
     <div class="col-span-6 sm:col-span-3">
@@ -44,7 +44,7 @@
 
     <div class="col-span-6 sm:col-span-3">
       <%= form.label :job_type, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-      <%= form.select :job_type, options_for_select(User.job_types.map { |key, value| [value.titleize, key] }, selected: form.object.job_type), {}, { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" } %>
+      <%= form.select :job_type, options_for_select(User.job_types.map { |key, value| [value.titleize, key] }, selected: form.object.job_type), {}, { disabled: local_assigns[:disabled], class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" } %>
     </div>
     <div class="col-span-6 sm:col-span-3">
       <%= form.label :joining_date, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
@@ -56,14 +56,7 @@
       <%= form.date_field :leaving_date, disabled: local_assigns[:disabled], class: "shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" %>
     </div>
 
-    <% if local_assigns[:disabled].present? %>
-    <div class="col-span-6 sm:col-full justify-self-end">
-    
-      <%= link_to "Edit this Employee", edit_company_user_path(@company, user), class: "text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" %>
-      <%= link_to "Back to Employees", company_users_path(@company), class: "text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" %>
-    </div>
-
-    <% else %>
+    <% if local_assigns[:disabled].blank? %>
       <div class="col-span-6 sm:col-full justify-self-end">
         <%= form.submit class: "text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" %>
         <%= link_to "Cancel", company_users_path(@company), class: "border border-gray-200 dark:border-gray-500 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-600" %>
