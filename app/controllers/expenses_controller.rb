@@ -25,9 +25,14 @@ class ExpensesController < ApplicationController
 
     respond_to do |format|
       if @expense.save
-        format.html { redirect_to company_expense_url(@company, @expense), notice: 'Expense was successfully created.' }
+        format.html { redirect_to company_expenses_url(@company), notice: 'Expense was successfully created.' }
         format.json { render :show, status: :created, location: @expense }
       else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.update('remote_modal_body',
+                                                   partial: 'expenses/form',
+                                                   locals: { expense: @expense })
+        end
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @expense.errors, status: :unprocessable_entity }
       end
@@ -38,9 +43,14 @@ class ExpensesController < ApplicationController
   def update
     respond_to do |format|
       if @expense.update(expense_params)
-        format.html { redirect_to company_expense_url(@company, @expense), notice: 'Expense was successfully updated.' }
+        format.html { redirect_to company_expenses_url(@company), notice: 'Expense was successfully updated.' }
         format.json { render :show, status: :ok, location: @expense }
       else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.update('remote_modal_body',
+                                                   partial: 'expenses/form',
+                                                   locals: { expense: @expense })
+        end
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @expense.errors, status: :unprocessable_entity }
       end
