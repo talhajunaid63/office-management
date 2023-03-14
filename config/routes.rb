@@ -8,5 +8,6 @@ Rails.application.routes.draw do
     resources :users
     resources :salaries
     resources :expenses
+    resources :clients
   end
 end
