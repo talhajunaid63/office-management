@@ -25,9 +25,14 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.save
-        format.html { redirect_to company_url(@company), notice: "Company was successfully created." }
+        format.html { redirect_to companies_url, notice: "Company was successfully created." }
         format.json { render :show, status: :created, location: @company }
       else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.update('remote_modal_body',
+                                                   partial: 'companies/form',
+                                                   locals: { company: @company })
+        end
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @company.errors, status: :unprocessable_entity }
       end
@@ -38,9 +43,14 @@ class CompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @company.update(company_params)
-        format.html { redirect_to company_url(@company), notice: "Company was successfully updated." }
+        format.html { redirect_to companies_url, notice: "Company was successfully updated." }
         format.json { render :show, status: :ok, location: @company }
       else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.update('remote_modal_body',
+                                                   partial: 'companies/form',
+                                                   locals: { company: @company })
+        end
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @company.errors, status: :unprocessable_entity }
       end
